@@ -9,6 +9,8 @@
 #include <string>
 #include <iostream>
 
+#include <libyuv.h>
+
 #ifdef __cplusplus
 extern "C"
 {

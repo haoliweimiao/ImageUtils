@@ -9,6 +9,9 @@ cmake_minimum_required(VERSION 3.10.2)
 
 project("ImageUtils")
 
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c11 -Wall")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -fno-rtti -fno-exceptions -Wall")
+
 # Creates and names a library, sets it as either STATIC
 # or SHARED, and provides the relative paths to its source code.
 # You can define multiple libraries, and CMake builds them for you.
@@ -25,6 +28,11 @@ add_library( # Sets the name of the library.
         SwigImageUtils.cpp
         # resource cpp file
         ImageUtils.cpp)
+
+# add third library
+
+include_directories(${CMAKE_SOURCE_DIR}/third/libyuv/include)
+add_subdirectory(${CMAKE_SOURCE_DIR}/third/libyuv)
 
 # Searches for a specified prebuilt library and stores the path as a
 # variable. Because CMake includes system libraries in the search path by
@@ -48,4 +56,7 @@ target_link_libraries( # Specifies the target library.
 
         # Links the target library to the log library
         # included in the NDK.
-        ${log-lib})
+        ${log-lib}
+        # third library
+        yuv
+        )
