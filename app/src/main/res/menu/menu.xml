@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/menu_show_nv21"
+        android:title="Show NV21 Image"/>
+    <item android:id="@+id/menu_show_yuy2"
+        android:title="Show YUY2 Image"/>
+
+</menu>

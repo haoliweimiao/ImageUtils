@@ -27,6 +27,7 @@ add_library( # Sets the name of the library.
         # swing create cpp file
         SwigImageUtils.cpp
         # resource cpp file
+        log.h
         ImageUtils.cpp)
 
 # add third library
