@@ -2,6 +2,7 @@ package com.von.image.utils.demo;
 
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import com.von.image.jpeg.lib.NativeJpegTurbo;
 import com.von.image.utils.demo.databinding.ActivityMainBinding;
 import com.von.image.utils.lib.NativeImageUtils;
 
@@ -44,6 +46,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.menu_show_yuy2:
                 showYuy2Image();
+                break;
+            case R.id.menu_show_jpeg:
+                showJpegImage();
                 break;
             default:
                 break;
@@ -160,4 +165,53 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+    /**
+     * show jpeg image
+     */
+    private void showJpegImage() {
+        byte[] imageData = null;
+        try {
+            InputStream is = getAssets().open("image_w720_h1280.nv21");
+            int size = is.available();
+            imageData = new byte[size];
+            is.read(imageData);
+            is.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        if (imageData != null) {
+            int width = 720;
+            int height = 1280;
+            int length = width * height * 3 / 2;
+            byte[] i420Cache = new byte[length];
+            NativeImageUtils.nv21ToI420(imageData, i420Cache, width, height);
+
+//            ZkYuvUtils.nativeI420ToNV21(i420Cache, imageData, width, height);
+//
+//            Bitmap bitmap = nv21ToBitmapUtil.nv21ToBitmap(imageData, width, height);
+//            if (bitmap != null) {
+//                runOnUiThread(() -> {
+//                    img.setImageBitmap(bitmap);
+//                });
+//            }
+            byte[] jpeg = new byte[length];
+            for (int i = 0; i < 100; i++) {
+                long startTime = System.currentTimeMillis();
+                NativeJpegTurbo.yuv2jpeg(i420Cache, length, width, height, jpeg, new long[1],100);
+                Log.i(TAG, "i420ToJpeg time : " + (System.currentTimeMillis() - startTime));
+            }
+
+            Log.i(TAG, "jpeg length : " + jpeg.length);
+
+            Bitmap bitmap = BitmapFactory.decodeByteArray(jpeg, 0, jpeg.length, new BitmapFactory.Options());
+            if (bitmap != null) {
+                runOnUiThread(() -> {
+                    mBinding.imgContent.setImageBitmap(bitmap);
+                });
+            }
+        }
+    }
+
 }

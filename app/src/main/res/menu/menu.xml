@@ -5,5 +5,7 @@
         android:title="Show NV21 Image"/>
     <item android:id="@+id/menu_show_yuy2"
         android:title="Show YUY2 Image"/>
+    <item android:id="@+id/menu_show_jpeg"
+        android:title="Show JPEG Image"/>
 
 </menu>

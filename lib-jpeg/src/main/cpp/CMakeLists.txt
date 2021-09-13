@@ -6,6 +6,10 @@ endif()
 
 project(libjpeg-turbo C)
 set(VERSION 2.1.2)
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c11 -Wall")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -fno-rtti -fno-exceptions -Wall")
+
+
 string(REPLACE "." ";" VERSION_TRIPLET ${VERSION})
 list(GET VERSION_TRIPLET 0 VERSION_MAJOR)
 list(GET VERSION_TRIPLET 1 VERSION_MINOR)
@@ -562,7 +566,7 @@ set(JPEG_SOURCES jcapimin.c jcapistd.c jccoefct.c jccolor.c jcdctmgr.c jchuff.c
   jdatasrc.c jdcoefct.c jdcolor.c jddctmgr.c jdhuff.c jdicc.c jdinput.c
   jdmainct.c jdmarker.c jdmaster.c jdmerge.c jdphuff.c jdpostct.c jdsample.c
   jdtrans.c jerror.c jfdctflt.c jfdctfst.c jfdctint.c jidctflt.c jidctfst.c
-  jidctint.c jidctred.c jquant1.c jquant2.c jutils.c jmemmgr.c jmemnobs.c)
+  jidctint.c jidctred.c jquant1.c jquant2.c jutils.c jmemmgr.c jmemnobs.c JpegTurboWrap.cpp JpegTurbo.cpp)
 
 if(WITH_ARITH_ENC OR WITH_ARITH_DEC)
   set(JPEG_SOURCES ${JPEG_SOURCES} jaricom.c)
