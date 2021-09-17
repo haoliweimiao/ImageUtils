@@ -1,5 +1,5 @@
 package com.von.image.jpeg.lib;
-public class ZkJpegNative {
+public class NativeJpeg {
     static {
         System.loadLibrary("JpegUtils");
     }

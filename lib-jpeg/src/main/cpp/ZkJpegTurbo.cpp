@@ -6,8 +6,8 @@
 #include <bitset>
 #include <iosfwd>
 
-#include "jpeglib.h"
-#include "turbojpeg.h"
+#include <jpeglib.h>
+#include <turbojpeg.h>
 #include "ZkJpegTurbo.h"
 
 // JNI jbyteArray转char*
@@ -108,7 +108,7 @@ extern "C" jint JNI_OnLoad(JavaVM *vm, void *reserved) {
     if (vm->GetEnv(reinterpret_cast<void **>(&env), JNI_VERSION_1_6) != JNI_OK) {
         return JNI_ERR;
     } else {
-        jclass clazz = env->FindClass("com/zkteco/edk/jpeg/ZkJpegNative");
+        jclass clazz = env->FindClass("com/von/image/jpeg/lib/NativeJpeg");
         if (clazz) {
             jint ret = env->RegisterNatives(clazz, method_table,
                                             sizeof(method_table) / sizeof(method_table[0]));

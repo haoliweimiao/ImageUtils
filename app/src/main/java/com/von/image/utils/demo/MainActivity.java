@@ -12,9 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
-import com.von.image.jpeg.lib.NativeJpegTurbo;
 import com.von.image.utils.demo.databinding.ActivityMainBinding;
 import com.von.image.utils.lib.NativeImageUtils;
+import com.von.image.jpeg.lib.NativeJpeg;
 
 import java.io.InputStream;
 
@@ -188,24 +188,9 @@ public class MainActivity extends AppCompatActivity {
             byte[] i420Cache = new byte[length];
             NativeImageUtils.nv21ToI420(imageData, i420Cache, width, height);
 
-//            ZkYuvUtils.nativeI420ToNV21(i420Cache, imageData, width, height);
-//
-//            Bitmap bitmap = nv21ToBitmapUtil.nv21ToBitmap(imageData, width, height);
-//            if (bitmap != null) {
-//                runOnUiThread(() -> {
-//                    img.setImageBitmap(bitmap);
-//                });
-//            }
-            byte[] jpeg = new byte[length];
-            for (int i = 0; i < 100; i++) {
-                long startTime = System.currentTimeMillis();
-                NativeJpegTurbo.yuv2jpeg(i420Cache, length, width, height, jpeg, new long[1],100);
-                Log.i(TAG, "i420ToJpeg time : " + (System.currentTimeMillis() - startTime));
-            }
+            NativeJpeg.i420ToJpeg(i420Cache, length, width, height, imageData ,100);
 
-            Log.i(TAG, "jpeg length : " + jpeg.length);
-
-            Bitmap bitmap = BitmapFactory.decodeByteArray(jpeg, 0, jpeg.length, new BitmapFactory.Options());
+            Bitmap bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.length, new BitmapFactory.Options());
             if (bitmap != null) {
                 runOnUiThread(() -> {
                     mBinding.imgContent.setImageBitmap(bitmap);
