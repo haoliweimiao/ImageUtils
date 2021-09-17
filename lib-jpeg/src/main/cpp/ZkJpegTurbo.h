@@ -5,16 +5,10 @@
 #ifndef EDK_LIBRARY_YUV_ZKJPEGTURBO_H
 #define EDK_LIBRARY_YUV_ZKJPEGTURBO_H
 
-#include "jpeglib.h"
-#include "turbojpeg.h"
-
 #ifdef __cplusplus
 extern "C"
 {
 #endif
-
-typedef signed char *ImageData;
-typedef unsigned long *ImageSize;
 
 /**
  *
@@ -28,8 +22,8 @@ typedef unsigned long *ImageSize;
  * @param quality    转换后的图像质量(1~100)
  * @return
  */
-int yuv2jpeg(ImageData i420Buffer, int yuvSize, int yuvWidth, int yuvHeight,
-             ImageData jpegBuffer, ImageSize jpeg_size, int quality);
+int yuv2jpeg(unsigned char *i420Buffer, int yuvSize, int yuvWidth, int yuvHeight, int subSample,
+             unsigned char **jpegBuffer, unsigned long *jpegSize, int quality);
 
 #ifdef __cplusplus
 }
